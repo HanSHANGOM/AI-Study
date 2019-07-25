@@ -1,0 +1,71 @@
+11강
+tf.constant(상수)
+tf.Variable변수
+tf.random_normal(shape) -> 정규분포를 따르는 랜덤
+
+tf.nn.relu(tf.matmul(input,w)+b)
+
+error = tf.substract(train_out,out)
+mse = tf.reduce_mean(tf.square(error)) 제곱평균
+
+하이퍼파라미터
+err
+target
+epoch
+max_epochs
+
+train = tf.train_GradientDescentOptimizer(0.01).minimize(mse)
+sess = tf.Session()
+sess.run(tf.global_variables_initializer())
+
+err>target and epoch<max_epochs:
+    epoch+=1
+    err,_ = sess.run([mse,train])
+
+
+텐서플로 2.0
+
+x= [[2,]]
+m = tf.matmul(x,x)
+
+print(m)
+
+placeholder에 안담고 session도 바로 안해도 된다.
+즉 computational graph가 없이 바로바로 할 수 있다 -> eager execution
+
+
+high level api -> Keras
+
+model = tf.keras.Sequential()
+model.add(layers.Dense(32,input_dim=2,activation='relu'))
+...
+
+model.compile(loss='mse',optimizer='adam',metrics=['binary_accuracy']
+
+model.fit(training_data, target_data, nb_epoch=1000,verabse=2)
+
+이거를 텐서플로로도 수정이 가능함(둘이 연결될 수 있다.)
+
+eager execution 사용법
+
+tf.enable_eager_execution()
+print(tf.excutin_eagerly())//eager execution 가능한지 확인
+
+x=tf.matmul([[[1,2],[3,4]],[[4,5],[6,7]]])
+y=tf.add(x,1)
+z=tf.random_uniform([5,3])
+
+print(x,y,z)
+
+eager execution - numpy
+
+y=tf.add(np.array(1),np.array(1))
+print(y.numpy)
+//numpy operation에 의해 tensor가 들어와도 numpy 배열로 변경
+
+eager execution - 동적 흐름 제어
+fizzbuzz problem
+(3의배수면 fizz,5의배수면 buzz, 둘다면 fizzbuzz)
+tf.constant를 가지고 즉석에서 numpy로 바꿔줘서 다룰 수 있음
+
+

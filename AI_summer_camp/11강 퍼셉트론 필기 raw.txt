@@ -1,0 +1,11 @@
+11강 퍼셉트론과 다층 퍼셉트론
+다수의 신호입력->하나의 신호 출력
+가중치 : 신호를 전달하는 역할
+바이어스 : 퍼셉트론 동작 경향성
+activation function :신호의 전달 여부 결정
+
+xor = (x1 nand x2) and (x1 or x2)
+중간부분 : hidden layer
+hidden layer가 3층 이상 되면 Deep Neural Net이라고 한다
+
+층수가 깊어지고 한 층의 노드 증가->파라미터 증가
