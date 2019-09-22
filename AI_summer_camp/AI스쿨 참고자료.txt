@@ -1,0 +1,60 @@
+프로젝트 양식
+(양식) https://drive.google.com/open?id=1DE1l4-i-S5-D1VFE0870aenx52OPdSPJ
+
+(제출) https://drive.google.com/open?id=1BzyX2shautRR1dbzYl4L8hEpKIe6r-rq
+
+튜토리얼 안내
+오후반 강사 김도경님의 레퍼런스 (http://bitly.kr/GHM92K)
+파이썬
+점프 투 파이썬 (https://wikidocs.net/5)
+
+Edwith - 모두를 위한 파이썬 (https://www.edwith.org/pythonforeverybody)
+
+인공지능 강좌
+[입문 강좌] ‘Edwith- school of ai (흥미 위주)’ (https://www.edwith.org/schoolofai)
+
+[초급 강좌] ‘모두를 위한 딥러닝 시즌 1(이론만)’ (http://bitly.kr/XVGHD)
+
+[초급 강좌] ‘데이터분석’ todaycode오늘코드 (https://www.youtube.com/channel/UCLR3sD0KB_dWpvcsrLP0aUg/playlists)
+
+[중급 강좌 ] ‘Edwith - Data science’ (https://www.edwith.org/datascience)
+
+[입문 책] 딥러닝 첫걸음(https://book.naver.com/bookdb/book_detail.nhn?bid=11477902)
+
+[입문 및 초급 책] 모두의 딥러닝 (https://book.naver.com/bookdb/book_detail.nhn?bid=12990945)
+
+[초급 책] 처음 배우는 데이터 과학 (https://book.naver.com/bookdb/book_detail.nhn?bid=13300129)
+
+[중급 책] 머신러닝 탐구생활 (https://book.naver.com/bookdb/book_detail.nhn?bid=13950520)
+
+공모전
+빅콘테스트 (http://www.bigcontest.or.kr/)
+
+카카오 아레나 (https://arena.kakao.com/)
+
+Naver X LINE AI rush (https://ai-rush.com/)
+
+Kaggle (https://www.kaggle.com/competitions)
+
+데이콘(https://dacon.io/) [7.11부터 시작]
+
+Cheat sheets
+파이썬 ( https://datacamp-community-prod.s3.amazonaws.com/e30fbcd9-f595-4a9f-803d-05ca5bf84612)
+
+넘파이 (https://datacamp-community-prod.s3.amazonaws.com/e9f83f72-a81b-42c7-af44-4e35b48b20b7)
+
+판다스 (http://datacamp-community-prod.s3.amazonaws.com/dbed353d-2757-4617-8206-8767ab379ab3)
+
+싸이킷런 (https://datacamp-community-prod.s3.amazonaws.com/5433fa18-9f43-44cc-b228-74672efcd116)
+
+미니 프로젝트
+데이콘 튜토리얼 캠프 (https://dacon.io/tutorial_comp)
+영화 관객수 예측 튜토리얼 대회
+아파트 실거래가 예측 튜토리얼 대회
+캐글 타이타닉 프로젝트 (https://www.kaggle.com/c/titanic)
+
+[동영상] T 아카데미 (캐글 타이타닉) (https://www.youtube.com/playlist?list=PL9mhQYIlKEhfBKFj3HYWwk-jQlV8aNwgk)
+
+School of AI 코딩따라하기 (https://www.edwith.org/introdeep)
+
+캐글 집값 맞추기 프로젝트 및 튜토리얼 (https://www.kaggle.com/c/house-prices-advanced-regression-techniques/overview/tutorials)

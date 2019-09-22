@@ -1,0 +1,300 @@
+A=np.array([[1,4,5,8],[2,1,7,3],[5,4,5,9]])
+ A = A/np.sum(A)
+    #print(np.sum(A))
+    return np.var(A)
+C가 0보다 큰 원소들의 합 np.sum(C>0)
+mean(), median(), std(), var()를 이용하면
+ 행렬의 평균값, 중간값, 표준 편차값, 분산값을 코드 한 줄로 구할 수 있습니다. 
+
+np.transpose()
+transpose() 또는 T를 이용하면 전치행렬을 구할 수 있습니다. 
+배열의 (i, j)(i,j) 번째 원소를 (j, i)(j,i)번째 원소로 변환합니다.
+
+np.linalg.inv
+inv()는 행렬의 역행렬(inverse)를 구할 때 사용됩니다. 
+NumPy의 선형대수학 관련 세부 패키지 linalg를 사용하기 때문에, 조금 더 긴 명령어를 사용합니다
+
+np.dot
+dot()은 두 행렬의 곱셈, 혹은 두 벡터의 내적(dot product)을 구할 때 사용됩니다. 
+이때 두 행렬의 크기 또는 shape이 맞지 않으면 오류가 발생합니다.
+>>> A = np.array([[1, 2, 3], [1, 2, 1]])
+>>> B = np.array([[2, 1, 3], [-1, 0, 5]])
+>>> C = np.dot(A, B)
+
+loss function
+def loss(x, y, beta_0, beta_1):
+    N = len(x)
+    x=np.array(x)
+    y=np.array(y)
+    y_predicted=x*beta_0+beta_1
+    squared_loss = np.sum((y_predicted-y)**2)
+    '''
+    x, y, beta_0, beta_1 을 이용해 loss값을 계산한 뒤 리턴합니다.
+    '''
+    #loss=sum([(y[i]-(beta_0*x[i]+beta_1))**2 for i in range(N)]) #N2 python array
+    #loss=sum([abs(y[i]-(beta_0*x[i]+beta_1)) for i in range(N)]) #N1
+    #return loss
+    return squared_loss
+
+X = [8.70153760, 3.90825773, 1.89362433, 3.28730045, 7.39333004, 2.98984649, 2.25757240, 9.84450732, 9.94589513, 5.48321616]
+Y = [5.64413093, 3.75876583, 3.87233310, 4.40990425, 6.43845020, 4.02827829, 2.26105955, 7.15768995, 6.29097441, 5.19692852]
+
+train_X = np.array(X).reshape(-1,1)
+train_Y = np.array(Y)
+
+'''
+여기에서 모델을 트레이닝합니다.
+'''
+lrmodel =  LinearRegression()
+lrmodel.fit(train_X,train_Y)
+
+beta_0 = lrmodel.coef_[0] #coefficient
+beta_1 = lrmodel.intercept_
+
+print("beta_0: %f" % beta_0)
+print("beta_1: %f" % beta_1)
+print("Loss: %f" % loss(X, Y, beta_0, beta_1))
+
+
+
+
+다중회귀
+./data/Advertising.csv 에서 데이터를 읽어, X와 Y를 만듭니다.
+
+X는 (200, 3) 의 shape을 가진 2차원 np.array,
+Y는 (200,) 의 shape을 가진 1차원 np.array여야 합니다.
+
+X는 FB, TV, Newspaper column 에 해당하는 데이터를 저장해야 합니다.
+Y는 Sales column 에 해당하는 데이터를 저장해야 합니다.
+'''
+X=[]
+Y=[]
+csvreader = csv.reader(open("data/Advertising.csv"))
+next(csvreader)
+for line in csvreader:
+    y_i = float(line[-1])
+    Y.append(y_i)
+    x_i = [float(line[i]) for i in range(1,4)]
+    X.append(x_i)
+            
+X=np.array(X).reshape(200,3)
+Y=np.array(Y).reshape(200,)
+    
+lrmodel = LinearRegression()
+lrmodel.fit(X, Y)
+
+beta_0 = lrmodel.coef_[0]
+beta_1 = lrmodel.coef_[1]
+beta_2 = lrmodel.coef_[2]
+beta_3 = lrmodel.intercept_
+
+print("beta_0: %f" % beta_0)
+print("beta_1: %f" % beta_1)
+print("beta_2: %f" % beta_2)
+print("beta_3: %f" % beta_3)
+
+def expected_sales(fb, tv, newspaper, beta_0, beta_1, beta_2, beta_3):
+    
+    '''FB에 fb만큼, TV에 tv만큼, Newspaper에 newspaper 만큼의 광고비를 사용했고,
+    트레이닝된 모델의 weight 들이 beta_0, beta_1, beta_2, beta_3 일 때
+    예상되는 Sales 의 양을 출력합니다.
+    
+    '''  
+    
+    return fb*beta_0 + tv*beta_1 + newspaper*beta_2 + beta_3
+
+print("예상 판매량: %f" % expected_sales(10, 12, 3, beta_0, beta_1, beta_2, beta_3)) 
+
+혹은 다항식 회귀분석
+
+#X=np.array(X).reshape(200,3)
+#Y=np.array(Y).reshape(200,)
+# 다항식 회귀분석을 진행하기 위해 변수들을 조합합니다.
+X_poly = []
+for x_i in X:
+    X_poly.append([
+        x_i[0]**0.5  , # X_1^2
+        x_i[1]*x_i[0] , # X_2
+         # X_2 * X_3
+        x_i[2]**3  # X_3
+    ])
+
+# X, Y를 80:20으로 나눕니다. 80%는 트레이닝 데이터, 20%는 테스트 데이터입니다.
+x_train, x_test, y_train, y_test = train_test_split(X_poly, Y, test_size=0.2, random_state=0)
+
+# x_train, y_train에 대해 다항식 회귀분석을 진행합니다.
+lrmodel = LinearRegression()
+lrmodel.fit(x_train, y_train)
+
+#x_train에 대해, 만든 회귀모델의 예측값을 구하고, 이 값과 y_train 의 차이를 이용해 MSE를 구합니다.
+predicted_y_train = lrmodel.predict(x_train)
+mse_train = mean_squared_error(y_train, predicted_y_train)
+print("MSE on train data: {}".format(mse_train))
+
+# x_test에 대해, 만든 회귀모델의 예측값을 구하고, 이 값과 y_test 의 차이를 이용해 MSE를 구합니다. 이 값이 1 미만이 되도록 모델을 구성해 봅니다.
+predicted_y_test = lrmodel.predict(x_test)
+mse_test = mean_squared_error(y_test, predicted_y_test)
+print("MSE on test data: {}".format(mse_test))
+
+단어 코퍼스 분석
+def main():
+    words = read_data()
+    words = sorted(words,key=lambda word: word[1])[::-1] # words.txt 단어를 빈도수 순으로 정렬합니다.
+    print(words)
+    # 정수로 표현된 단어를 X축 리스트에, 각 단어의 빈도수를 Y축 리스트에 저장합니다.  
+    X = list(range(1, len(words)+1))
+    Y = [x[1] for x in words]
+    
+    # X, Y 리스트를 array로 변환한 후 각 원소 값에 log()를 적용합니다.
+    X, Y = np.array(X), np.array(Y)  
+    X, Y = np.log(X), np.log(Y)
+    
+    # 기울기와 절편을 구한 후 그래프와 차트를 출력합니다. 
+    slope, intercept = do_linear_regression(X, Y)
+    draw_chart(X, Y, slope, intercept)
+    
+    return slope, intercept
+
+
+# read_data() - words.txt에 저장된 단어와 해당 단어의 빈도수를 리스트형으로 변환합니다.
+def read_data():
+    # words.txt 에서 단어들를 읽어, 
+    # [[단어1, 빈도수], [단어2, 빈도수] ... ]형으로 변환해 리턴합니다.
+    words = []
+    with open('words.txt','r') as f:
+        word_and_bin=f.read().split('\n')
+        #print(word_and_bin)
+        words = [[x.split(',')[0],int(x.split(',')[1])] for x in word_and_bin]
+        #print(words)
+    return words
+
+
+# do_linear_regression() - 임포트한 sklearn 패키지의 함수를 이용해 그래프의 기울기와 절편을 구합니다.
+def do_linear_regression(X, Y):
+    # do_linear_regression() 함수를 작성하세요. 
+    X=X.reshape(-1,1)
+    lrmodel = LinearRegression()
+    lrmodel.fit(X,Y)
+    slope = lrmodel.coef_[0]
+    intercept=lrmodel.intercept_
+    return (slope, intercept)
+
+
+확률로 파이 계산
+def main():
+    plt.figure(figsize=(5,5))
+    
+    X = []
+    Y = []
+    
+    # N을 10배씩 증가할 때 파이 값이 어떻게 변경되는지 확인해보세요.
+    N = 10**5
+    
+    for i in range(N):
+        X.append(np.random.rand() * 2 - 1)
+        Y.append(np.random.rand() * 2 - 1)
+    X = np.array(X)
+    Y = np.array(Y)
+    distance_from_zero = np.sqrt(X * X + Y * Y)
+    is_inside_circle = distance_from_zero <= 1
+    
+    print("Estimated pi = %f" % (np.average(is_inside_circle) * 4))
+    
+    plt.scatter(X, Y, c=is_inside_circle)
+    plt.savefig('circle.png')
+    elice_utils.send_image('circle.png')
+
+if __name__ == "__main__":
+    main()
+
+
+
+베이즈정리
+
+def main():
+    sensitivity = float(input())
+    prior_prob = float(input())
+    false_alarm = float(input())
+
+    print("%.2lf%%" % (100 * mammogram_test(sensitivity, prior_prob, false_alarm)))
+
+
+#A는 검사로 암 진단
+#B는 실제 유방암
+#sensitivity : A | B
+#prior_prob : B
+#false alarm :  A | !B
+def mammogram_test(sensitivity, prior_prob, false_alarm):
+    
+    p_a1_b1 = sensitivity # p(A = 1 | B = 1)
+
+    p_b1 = prior_prob    # p(B = 1)
+
+    p_b0 = 1-p_b1    # p(B = 0)
+
+    p_a1_b0 = false_alarm # p(A = 1|B = 0)
+
+    p_a1 = p_a1_b0 * p_b0 + p_a1_b1 * p_b1    # p(A = 1)
+
+    p_b1_a1 = p_a1_b1 * p_b1 / p_a1 # p(B = 1|A = 1)
+    print(type(p_b1_a1))
+    return p_b1_a1
+
+나이브 베이즈 분류기
+import re
+import math
+import numpy as np
+
+def main():
+    M1 = {'r': 0.7, 'g': 0.2, 'b': 0.1} # M1 기계의 사탕 비율
+    M2 = {'r': 0.3, 'g': 0.4, 'b': 0.3} # M2 기계의 사탕 비율
+    
+    test = {'r': 4, 'g': 3, 'b': 3}
+
+    print(naive_bayes(M1, M2, test, 0.7, 0.3))
+
+def naive_bayes(M1, M2, test, M1_prior, M2_prior):
+    
+    m1_test=M1_prior
+    m2_test=M2_prior
+    for c in M1.keys():
+        m1_test*=M1[c]**test[c]
+        m2_test*=M2[c]**test[c]
+    
+    result=np.array([m1_test,m2_test])
+    result=result/np.sum(result)
+    return result
+
+bag of words
+
+import re
+
+special_chars_remover = re.compile("[^\w'|_]")
+#print(special_chars_remover)
+def main():
+    sentence = input()
+    #input()
+    bow = create_BOW(sentence)
+
+    print(bow)
+
+
+def create_BOW(sentence):
+    bow = {}
+    s=sentence.lower()
+    words = remove_special_characters(s).split()
+    tokens = [token for token in words if len(token)>1]
+    for token in words :
+        bow.setdefault(token,0)
+        bow[token] +=1
+    
+    return bow
+
+
+def remove_special_characters(sentence):
+    #print(special_chars_remover.sub(None, ' ', sentence))
+    return special_chars_remover.sub(' ', sentence)
+
+
+
+
